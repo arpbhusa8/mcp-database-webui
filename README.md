@@ -1,6 +1,7 @@
 # DataQuest - Database Query Assistant
 
 A chat-based interface for querying your database using natural language. Built with MCP (Model Context Protocol).
+![Preview](static/preview.png)
 
 ## Features
 
@@ -33,15 +34,7 @@ pip install flask flask-cors langchain_openai python-dotenv
 pip install mcp_use
 ```
 
-4. Install the MCP PostgreSQL server:
-
-```bash
-npm install -y @modelcontextprotocol/server-postgres
-```
-
-5. Set up your database connection (update the connection string in app.py)
-
-6. Make sure you have an OpenAI API key and your database connection string in your .env file:
+4. Make sure you have an OpenAI API key and your database connection string in your .env file:
 
 ```
 OPENAI_API_KEY=your_api_key_here
