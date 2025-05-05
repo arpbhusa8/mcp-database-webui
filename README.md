@@ -2,6 +2,7 @@
 
 A chat-based interface for querying your database using natural language. Built with MCP (Model Context Protocol).
 ![Preview](static/preview.png)
+Read the full article on Medium here: https://medium.com/@jonortega20/building-a-database-querier-with-mcp-17df0f49a2de
 
 ## Features
 
