@@ -4,6 +4,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_anthropic import ChatAnthropic
 from mcp_use import MCPAgent, MCPClient
 
 app = Flask(__name__, static_folder='static')
@@ -32,16 +34,22 @@ def create_agent():
     client = MCPClient.from_dict(config)
 
     # Create LLM
-    llm = ChatOpenAI(model="gpt-4o")
+    # llm = ChatOpenAI(model="gpt-4o-mini")
+    # llm = ChatAnthropic(model="claude-3-7-sonnet-20250219")
+    llm = ChatGoogleGenerativeAI(model="gemini-2.5-pro")
 
     # Create agent with the client
-    return MCPAgent(llm=llm, client=client, max_steps=30)
+    return MCPAgent(llm=llm, client=client, max_steps=8)
 
 async def run_agent_query(query):
     agent = create_agent()
     
     # Add context about the database schema (not mandatory but can be helpful for the LLM)
-    full_query = f"The table is `users.users`, and among other columns, it contains `age`, `is_active` and `country_code`. {query}"
+    full_query = (
+        "The table is `employees`, and among other columns, it contains `name`, `age`, `email`, `department`, `salary`, `is_active`, and `country_code`. "
+        "If you encounter an error such as a missing table or column, do not retry. Instead, return the error message immediately. "
+        f"{query}"
+    )
     
     try:
         result = await agent.run(full_query)
